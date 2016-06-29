@@ -2,3 +2,8 @@
 1.0.2:
     - Create cities table
     - create_cities_table.php
+1.0.3:
+    - Create costs, couriers and packages tables
+    - create_costs_table.php
+    - create_couriers_table.php
+    - create_packages_table.php
