@@ -39,11 +39,6 @@ class Cost extends Model
             'key'      => 'city_destination_id',
             'otherKey' => 'id'
         ],
-        'courier' => [
-            'Octommerce\Shipping\Models\Courier',
-            'key'      => 'courier_id',
-            'otherKey' => 'id'
-        ],
         'package' => [
             'Octommerce\Shipping\Models\Package',
             'key'      => 'package_id',

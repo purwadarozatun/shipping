@@ -29,10 +29,6 @@ class Courier extends Model
     public $hasOne = [];
     public $hasMany = [
         'packages' => ['Octommerce\Shipping\Models\Package'],
-        'costs'  => [
-            'Octommerce\Shipping\Models\Cost',
-            'key' => 'courier_id',
-        ]
     ];
     public $belongsTo = [];
     public $belongsToMany = [];

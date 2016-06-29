@@ -7,3 +7,6 @@
     - create_costs_table.php
     - create_couriers_table.php
     - create_packages_table.php
+1.0.4:
+    - Remove courier_id from costs table
+    - remove_courier_id_from_costs_table.php
