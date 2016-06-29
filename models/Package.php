@@ -27,8 +27,15 @@ class Package extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [];
-    public $belongsTo = [];
+    public $hasMany = [
+        'costs'  => [
+            'Octommerce\Shipping\Models\Cost',
+            'key' => 'package_id',
+        ]
+    ];
+    public $belongsTo = [
+        'courier' => ['Octommerce\Shipping\Models\Courier'],
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];

@@ -27,7 +27,13 @@ class Courier extends Model
      * @var array Relations
      */
     public $hasOne = [];
-    public $hasMany = [];
+    public $hasMany = [
+        'packages' => ['Octommerce\Shipping\Models\Package'],
+        'costs'  => [
+            'Octommerce\Shipping\Models\Cost',
+            'key' => 'courier_id',
+        ]
+    ];
     public $belongsTo = [];
     public $belongsToMany = [];
     public $morphTo = [];

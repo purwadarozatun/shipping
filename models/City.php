@@ -34,5 +34,11 @@ class City extends Model
     public $belongsTo = [
         'state' => 'RainLab\Location\Models\State',
     ];
+    public $hasMany = [
+        'costs'  => [
+            'Octommerce\Shipping\Models\Cost',
+            'key' => 'city_origin_id',
+        ]
+    ];
 
 }

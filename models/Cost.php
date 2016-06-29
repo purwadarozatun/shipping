@@ -28,7 +28,28 @@ class Cost extends Model
      */
     public $hasOne = [];
     public $hasMany = [];
-    public $belongsTo = [];
+    public $belongsTo = [
+        'origin_city' => [
+            'Octommerce\Shipping\Models\City',
+            'key'      => 'city_origin_id',
+            'otherKey' => 'id'
+        ],
+        'destination_city' => [
+            'Octommerce\Shipping\Models\City',
+            'key'      => 'city_destination_id',
+            'otherKey' => 'id'
+        ],
+        'courier' => [
+            'Octommerce\Shipping\Models\Courier',
+            'key'      => 'courier_id',
+            'otherKey' => 'id'
+        ],
+        'package' => [
+            'Octommerce\Shipping\Models\Package',
+            'key'      => 'package_id',
+            'otherKey' => 'id'
+        ]
+    ];
     public $belongsToMany = [];
     public $morphTo = [];
     public $morphOne = [];
