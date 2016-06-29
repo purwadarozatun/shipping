@@ -2,12 +2,15 @@
 
 use Backend;
 use System\Classes\PluginBase;
+use RainLab\Location\Models\State;
 
 /**
  * Shipping Plugin Information File
  */
 class Plugin extends PluginBase
 {
+
+    public $require = ['RainLab.Location'];
 
     /**
      * Returns information about this plugin.
@@ -41,7 +44,14 @@ class Plugin extends PluginBase
      */
     public function boot()
     {
-
+        /**
+         * Extend RainLab\Location\Models\State
+         */
+        State::extend(function($model) {
+            $model->hasMany['cities'] = [
+                'Octommerce\Shipping\Models\City'
+            ];
+        });
     }
 
     /**
