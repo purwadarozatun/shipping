@@ -3,6 +3,60 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    courier:
+        label: Courier
+        type: dropdown
+        span: auto
+    package_id:
+        label: Package
+        type: dropdown
+        dependsOn: courier
+        span: auto
+    origin_state:
+        label: Origin state
+        type: dropdown
+        span: auto
+    origin_city_id:
+        label: Origin city
+        type: dropdown
+        dependsOn: origin_state
+        span: auto
+    destination_state:
+        label: Destination state
+        type: dropdown
+        span: auto
+    destination_city_id:
+        label: Destination city
+        type: dropdown
+        dependsOn: destination_state
+        span: auto
+    cost_rules:
+        label: Cost rules
+        type: radio
+        options:
+            flat: [Flat, 'Flat cost per Kg']
+            dynamic: [Dynamic, 'Dynamic cost based on the weight limit (E.g. 0-5Kg IDR 8000/Kg, 6-10kg IDR 7000/Kg). Example: The cost for 7Kg is IDR 54000']
+            range: [Range, 'Flat cost by each range (E.g. 0-5Kg IDR 20000, 6-10Kg IDR 50000). Example: The cost for 7Kg is IDR 50000']
+    min:
+        label: Min (Weight)
+        type: number
+        comment: Fill 0 (Zero) for start weight
+        span: auto
+        trigger:
+            action: disable
+            field: cost_rules
+            condition: value[flat]
+    max:
+        label: Max (Weight)
+        type: number
+        comment: Fill 0 (Zero) for unlimited weight
+        span: auto
+        trigger:
+            action: disable
+            field: cost_rules
+            condition: value[flat]
+    amount:
+        label: Amount
+        type: number
+        span: auto
+

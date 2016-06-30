@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Cost
+
+# Model Form Field configuration
+form: $/octommerce/shipping/models/cost/fields.yaml
+
+# Model Class name
+modelClass: Octommerce\Shipping\Models\Cost
+
+# Default redirect location
+defaultRedirect: octommerce/shipping/costs
+
+# Create page
+create:
+    title: Create Cost
+    redirect: octommerce/shipping/costs/update/:id
+    redirectClose: octommerce/shipping/costs
+
+# Update page
+update:
+    title: Edit Cost
+    redirect: octommerce/shipping/costs
+    redirectClose: octommerce/shipping/costs
+
+# Preview page
+preview:
+    title: Preview Cost

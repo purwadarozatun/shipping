@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Package
+
+# Model Form Field configuration
+form: $/octommerce/shipping/models/package/fields.yaml
+
+# Model Class name
+modelClass: Octommerce\Shipping\Models\Package
+
+# Default redirect location
+defaultRedirect: octommerce/shipping/packages
+
+# Create page
+create:
+    title: Create Package
+    redirect: octommerce/shipping/packages/update/:id
+    redirectClose: octommerce/shipping/packages
+
+# Update page
+update:
+    title: Edit Package
+    redirect: octommerce/shipping/packages
+    redirectClose: octommerce/shipping/packages
+
+# Preview page
+preview:
+    title: Preview Package

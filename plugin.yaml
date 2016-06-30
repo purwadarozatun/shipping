@@ -1,0 +1,52 @@
+plugin:
+    name: 'octommerce.shipping::lang.plugin.name'
+    description: 'octommerce.shipping::lang.plugin.description'
+    author: Surahman
+    icon: icon-truck
+    homepage: ''
+navigation:
+    shipping:
+        label: 'octommerce.shipping::lang.navigation.shipping'
+        url: octommerce/shipping/costs
+        icon: icon-truck
+        permissions:
+            - 'octommerce.shipping.*'
+        order: '300'
+        sideMenu:
+            cities:
+                label: 'octommerce.shipping::lang.navigation.sideMenu.cities'
+                url: octommerce/shipping/cities
+                icon: icon-building
+                permissions:
+                    - octommerce.shipping.access_cities
+            costs:
+                label: 'octommerce.shipping::lang.navigation.sideMenu.costs'
+                url: octommerce/shipping/costs
+                icon: icon-calculator
+                permissions:
+                    - octommerce.shipping.access_costs
+            couriers:
+                label: 'octommerce.shipping::lang.navigation.sideMenu.couriers'
+                url: octommerce/shipping/couriers
+                icon: icon-shield
+                permissions:
+                    - octommerce.shipping.access_couriers
+            packages:
+                label: 'octommerce.shipping::lang.navigation.sideMenu.packages'
+                url: octommerce/shipping/packages
+                icon: icon-bars
+                permissions:
+                    - octommerce.shipping.access_packages
+permissions:
+    octommerce.shipping.access_cities:
+        tab: Shipping
+        label: 'Access Cities'
+    octommerce.shipping.access_costs:
+        tab: Shipping
+        label: 'Access Costs'
+    octommerce.shipping.access_couriers:
+        tab: Shipping
+        label: 'Access Couriers'
+    octommerce.shipping.access_packages:
+        tab: Shipping
+        label: 'Access Packages'

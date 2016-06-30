@@ -3,6 +3,14 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
-        searchable: true
+    courier_id:
+        label: Courier
+        relation: courier
+        valueFrom: name
+    name:
+        label: Name
+    description:
+        label: Description
+    etd:
+        label: ETD
+

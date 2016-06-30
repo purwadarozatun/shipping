@@ -3,6 +3,17 @@
 # ===================================
 
 fields:
-    id:
-        label: ID
-        disabled: true
+    courier:
+        label: Courier
+        type: relation
+        select: name
+    name:
+        label: Name
+        span: auto
+    etd:
+        label: ETD (Estimated time delivery)
+        span: auto
+    description:
+        label: Description
+        type: textarea
+

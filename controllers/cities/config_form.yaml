@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: City
+
+# Model Form Field configuration
+form: $/octommerce/shipping/models/city/fields.yaml
+
+# Model Class name
+modelClass: Octommerce\Shipping\Models\City
+
+# Default redirect location
+defaultRedirect: octommerce/shipping/cities
+
+# Create page
+create:
+    title: Create City
+    redirect: octommerce/shipping/cities/update/:id
+    redirectClose: octommerce/shipping/cities
+
+# Update page
+update:
+    title: Edit City
+    redirect: octommerce/shipping/cities
+    redirectClose: octommerce/shipping/cities
+
+# Preview page
+preview:
+    title: Preview City

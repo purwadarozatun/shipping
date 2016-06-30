@@ -3,6 +3,42 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    courier_name:
+        label: Courier
+        relation: package
+        select: courier_id
+    package_id:
+        label: Package
+        relation: package
+        valueFrom: name
+    origin_state_name:
+        label: Origin state
+        relation: origin_city
+        select: state_id
         searchable: true
+    origin_city:
+        label: Origin city
+        relation: origin_city
+        select: name
+        searchable: true
+    destination_state_name:
+        label: Destination state
+        relation: destination_city
+        select: state_id
+        searchable: true
+    destination_city:
+        label: Destination city
+        relation: destination_city
+        select: name
+        searchable: true
+    amount:
+        label: Amount
+    is_per_kg:
+        label: Per Kg?
+        type: switch
+    min:
+        label: Min (Weight)
+    max:
+        label: Max (Weight)
+
+

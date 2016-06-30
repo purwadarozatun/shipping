@@ -1,0 +1,31 @@
+# ===================================
+#  Form Behavior Config
+# ===================================
+
+# Record name
+name: Courier
+
+# Model Form Field configuration
+form: $/octommerce/shipping/models/courier/fields.yaml
+
+# Model Class name
+modelClass: Octommerce\Shipping\Models\Courier
+
+# Default redirect location
+defaultRedirect: octommerce/shipping/couriers
+
+# Create page
+create:
+    title: Create Courier
+    redirect: octommerce/shipping/couriers/update/:id
+    redirectClose: octommerce/shipping/couriers
+
+# Update page
+update:
+    title: Edit Courier
+    redirect: octommerce/shipping/couriers
+    redirectClose: octommerce/shipping/couriers
+
+# Preview page
+preview:
+    title: Preview Courier

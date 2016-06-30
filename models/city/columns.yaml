@@ -3,6 +3,14 @@
 # ===================================
 
 columns:
-    id:
-        label: ID
+    state:
+        label: State
+        relation: state
+        select: name
+        searchable: true
+    name:
+        label: City
+        searchable: true
+    code:
+        label: City's code
         searchable: true
