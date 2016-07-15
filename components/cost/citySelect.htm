@@ -1,0 +1,5 @@
+<select name="city_id" class="form-control" id="city" required>
+    {% for city in cities %}
+    <option value="{{ city.id }}">{{ city.name }}</option>
+    {% endfor %}
+</select>

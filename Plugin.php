@@ -46,10 +46,8 @@ class Plugin extends PluginBase
      */
     public function registerComponents()
     {
-        return []; // Remove this line to activate
-
         return [
-            'Octommerce\Shipping\Components\MyComponent' => 'myComponent',
+            'Octommerce\Shipping\Components\Cost' => 'shippingCost',
         ];
     }
 

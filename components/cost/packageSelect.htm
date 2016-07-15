@@ -1,0 +1,17 @@
+<select name="package_id" class="form-control" id="package" required
+    data-request="onSelectCourierPackage"
+    data-request-data="">
+    {% for package in packages %}
+    <option value="{{ package.id }}">{{ package.name }}</option>
+    {% endfor %}
+</select>
+
+{% put scripts %}
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $('#package').change(function() {
+        $(this).data('request-data', {city_id: $('#city').val()});
+    });
+});
+</script>
+{% endput %}
