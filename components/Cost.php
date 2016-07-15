@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Shipping\Components;
 
+use ApplicationException;
 use Cms\Classes\ComponentBase;
 use RainLab\Location\Models\State;
 use Octommerce\Shipping\Models\City;
