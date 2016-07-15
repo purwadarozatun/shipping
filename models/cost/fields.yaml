@@ -16,7 +16,7 @@ fields:
         label: Origin state
         type: dropdown
         span: auto
-    origin_city_id:
+    city_origin_id:
         label: Origin city
         type: dropdown
         dependsOn: origin_state
@@ -25,7 +25,7 @@ fields:
         label: Destination state
         type: dropdown
         span: auto
-    destination_city_id:
+    city_destination_id:
         label: Destination city
         type: dropdown
         dependsOn: destination_state

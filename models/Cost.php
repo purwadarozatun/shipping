@@ -56,6 +56,33 @@ class Cost extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function beforeSave()
+    {
+        $this->prepareBeforeSave();
+    }
+
+    /**
+     * Preparation before save cost
+     *
+     * @return void
+     */
+    public function prepareBeforeSave()
+    {
+        switch ($this->cost_rules) {
+            case 'flat': 
+            case 'dynamic': 
+                $this->is_per_kg = 1;
+                break;
+            case 'range': 
+                $this->is_per_kg = 0;
+                break;
+        }
+        unset($this->courier); 
+        unset($this->origin_state); 
+        unset($this->destination_state); 
+        unset($this->cost_rules);
+    }
+        
     /**
      * Get the origin state name
      *
@@ -113,9 +140,9 @@ class Cost extends Model
             $options = Courier::orderBy('name', 'asc')->lists('name', 'id');
         else if ($fieldName == 'package_id')
             $options = $this->getPackageOptions($this->courier);
-        else if ($fieldName == 'origin_city_id')
+        else if ($fieldName == 'city_origin_id')
             $options = $this->getOriginCityOptions($this->origin_state);
-        else if ($fieldName == 'destination_city_id')
+        else if ($fieldName == 'city_destination_id')
             $options = $this->getDestinationCityOptions($this->destination_state);
         else
             $options = ['' => '-- none --'];
