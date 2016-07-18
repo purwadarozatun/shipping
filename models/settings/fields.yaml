@@ -1,0 +1,13 @@
+# ===================================
+#  Form Field Definitions
+# ===================================
+
+tabs:
+    fields:
+        city:
+            label: Origin Shipment
+            type: recordfinder
+            list: $/octommerce/shipping/models/city/columns.yaml
+            prompt: Click the %s button to find city
+            nameFrom: name
+            tab: General

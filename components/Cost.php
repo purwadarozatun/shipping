@@ -7,6 +7,7 @@ use RainLab\Location\Models\State;
 use Octommerce\Shipping\Models\City;
 use Octommerce\Shipping\Models\Courier;
 use Octommerce\Shipping\Models\Cost as CostModel;
+use Octommerce\Shipping\Models\Settings;
 
 class Cost extends ComponentBase
 {
@@ -64,16 +65,15 @@ class Cost extends ComponentBase
     {
         /** 
          * TODO
-         * Get default / origin city
          * Get products weight
-         * Improve shipping cost by each rule (Flat, dynamic and range cost)
          */
         $data = post();
         $weight = 13;
         $shippingCost = 'Free';
+        $cityOriginId = Settings::get('city_id');
 
         $query = CostModel::query()
-            ->where('city_origin_id', 3)
+            ->where('city_origin_id', $cityOriginId)
             ->where('city_destination_id', $data['city_id'])
             ->where('package_id', $data['package_id']);
 

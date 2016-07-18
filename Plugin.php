@@ -51,4 +51,18 @@ class Plugin extends PluginBase
         ];
     }
 
+    public function registerSettings()
+    {
+        return [
+            'config' => [
+                'label'       => 'Shipping',
+                'icon'        => 'icon-truck',
+                'description' => 'Configure Shipping plugins.',
+                'class'       => 'Octommerce\Shipping\Models\Settings',
+                'permissions' => ['octommerce.shipping.manage_plugins'],
+                'order'       => 60
+            ]
+        ];
+    }
+
 }
