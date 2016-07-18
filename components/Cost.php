@@ -63,12 +63,8 @@ class Cost extends ComponentBase
      */
     public function onSelectCourierPackage()
     {
-        /** 
-         * TODO
-         * Get products weight
-         */
         $data = post();
-        $weight = 13;
+        $weight = $data['weight'];
         $shippingCost = 'Free';
         $cityOriginId = Settings::get('city_id');
 

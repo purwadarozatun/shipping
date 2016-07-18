@@ -10,7 +10,10 @@
 <script type="text/javascript" charset="utf-8">
 $(function() {
     $('#package').change(function() {
-        $(this).data('request-data', {city_id: $('#city').val()});
+        $(this).data('request-data', {
+            city_id: $('#city').val(),
+            weight: parseInt($('#weight').text())
+        });
     });
 });
 </script>
