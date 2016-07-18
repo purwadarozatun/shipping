@@ -1,5 +1,6 @@
 <?php namespace Octommerce\Shipping\Components;
 
+use Db;
 use ApplicationException;
 use Cms\Classes\ComponentBase;
 use RainLab\Location\Models\State;
@@ -68,13 +69,15 @@ class Cost extends ComponentBase
          * Improve shipping cost by each rule (Flat, dynamic and range cost)
          */
         $data = post();
-        $weight = 1;
+        $weight = 13;
         $shippingCost = 'Free';
 
-        $cost = CostModel::where('city_origin_id', 1)
+        $query = CostModel::query()
+            ->where('city_origin_id', 3)
             ->where('city_destination_id', $data['city_id'])
-            ->where('package_id', $data['package_id'])
-            ->first();
+            ->where('package_id', $data['package_id']);
+
+        $cost = $query->first();
 
         if (! $cost) {
             throw new ApplicationException('Shipping cost not found!');
@@ -87,12 +90,21 @@ class Cost extends ComponentBase
             }  
             // Dynamic cost
             else {
-            
+                $cost = $query->select(Db::raw('SUM(CASE 
+                    WHEN '. $weight .' < max THEN amount * ('. $weight .' - min + 1) 
+                    WHEN '. $weight .' > max AND min = 0 THEN amount * (max - min)
+                    WHEN '. $weight .' > max THEN amount * (max - min + 1)
+                    END) AS total'))
+                    ->first();
+
+                $shippingCost = $cost ? $cost->total : $shippingCost;
             }
         }
         // Range cost
         else {
-        
+            $cost = $query->where('min', '<=', $weight)->where('max', '>=', $weight)->first();
+
+            $shippingCost = $cost ? $cost->amount : $shippingCost; 
         }
 
         return ['#shippingCost' => $shippingCost];
