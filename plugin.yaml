@@ -50,3 +50,6 @@ permissions:
     octommerce.shipping.access_packages:
         tab: Shipping
         label: 'Access Packages'
+    octommerce.shipping.manage_plugin:
+        tab: Shipping
+        label: 'Manage Plugin'
