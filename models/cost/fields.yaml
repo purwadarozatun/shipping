@@ -3,32 +3,26 @@
 # ===================================
 
 fields:
-    courier:
-        label: Courier
-        type: dropdown
-        span: auto
-    package_id:
+    package:
         label: Package
-        type: dropdown
-        dependsOn: courier
-        span: auto
-    origin_state:
-        label: Origin state
-        type: dropdown
-        span: auto
-    city_origin_id:
+        type: recordfinder
+        list: $/octommerce/shipping/models/package/columns.yaml
+        prompt: Click the %s button to find a package
+        nameFrom: name 
+        descriptionFrom: description
+    origin_city:
         label: Origin city
-        type: dropdown
-        dependsOn: origin_state
+        type: recordfinder
+        list: $/octommerce/shipping/models/city/columns.yaml
+        prompt: Click the %s button to find city
+        nameFrom: name 
         span: auto
-    destination_state:
-        label: Destination state
-        type: dropdown
-        span: auto
-    city_destination_id:
+    destination_city:
         label: Destination city
-        type: dropdown
-        dependsOn: destination_state
+        type: recordfinder
+        list: $/octommerce/shipping/models/city/columns.yaml
+        prompt: Click the %s button to find city
+        nameFrom: name 
         span: auto
     cost_rules:
         label: Cost rules
