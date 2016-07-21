@@ -34,20 +34,28 @@
         </div>
     </div>
 
-    <div class="col-md-4 col-sm-12">
+    <div class="col-md-2 col-sm-12">
         <div class="form-group">
             <label for="">Courier package</label>
             {% partial __SELF__ ~ "::packageSelect" %}
         </div>
     </div>
+
+    <div class="col-md-2 col-sm-12">
+        {% partial __SELF__ ~ "::insuranceSelect" %}
+    </div>
 </div>
 
 <div class="row">
     <div class="col-md-4 col-sm-12">
-        <table class="table"
+        <table class="table">
             <tr>
                 <td>Weight (Kg)</td> 
                 <td id="weight">7 Kg</td> 
+            </tr>
+            <tr>
+                <td>Insurance fee</td> 
+                <td id="insuranceFee">Not available</td>
             </tr>
             <tr>
                 <td>Shipping cost</td> 

@@ -1,0 +1,28 @@
+<div class="form-group" id="insurance">
+    {% if is_insurance %}
+        <label for="">Insurance</label>
+        <select name="is_insurance" class="form-control" 
+            data-request="onSelectInsurance"
+            data-request-data=""
+            required>
+            <option value="1">Yes</option>
+            <option value="0">No</option>
+        </select>
+    {% else %}
+        <label for="">Insurance</label>
+        <p>Insurance not available</p>
+    {% endif %}
+</div>
+
+{% put scripts %}
+<script type="text/javascript" charset="utf-8">
+$(function() {
+    $('#insurance').on('change', 'select', function() {
+        $(this).data('request-data', {
+            package_id: $('#package').val(),
+            subtotal: 89000 // Feel free to add your subtotal
+        });
+    });
+});
+</script>
+{% endput %}

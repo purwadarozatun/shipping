@@ -13,6 +13,29 @@ fields:
     etd:
         label: ETD (Estimated time delivery)
         span: auto
+    is_insurance:
+        label: Insurance
+        type: switch
+    is_fixed:
+        label: Fixed amount
+        type: switch
+        span: auto
+        trigger:
+            field: is_insurance
+            condition: checked
+            action: show
+    amount:
+        label: Amount (Fixed / Percentage)
+        span: left
+        comment: For percentage, please fill only with number (Without percent symbol)
+        type: number
+        trigger:
+            field: is_insurance
+            condition: checked
+            action: show
+    etd:
+        label: ETD (Estimated time delivery)
+        span: auto
     description:
         label: Description
         type: textarea

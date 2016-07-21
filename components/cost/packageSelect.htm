@@ -1,5 +1,6 @@
 <select name="package_id" class="form-control" id="package" required
     data-request="onSelectCourierPackage"
+    data-request-update="'{{ __SELF__}}::insuranceSelect':'#insurance'" 
     data-request-data="">
     {% for package in packages %}
     <option value="{{ package.id }}">{{ package.name }}</option>

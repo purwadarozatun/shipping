@@ -8,6 +8,7 @@ use Octommerce\Shipping\Models\City;
 use Octommerce\Shipping\Models\Courier;
 use Octommerce\Shipping\Models\Cost as CostModel;
 use Octommerce\Shipping\Models\Settings;
+use Octommerce\Shipping\Models\Package;
 
 class Cost extends ComponentBase
 {
@@ -79,6 +80,8 @@ class Cost extends ComponentBase
             throw new ApplicationException('Shipping cost not found!');
         }
 
+        $this->page['is_insurance'] = Package::find($data['package_id'])->is_insurance;
+
         if ($cost->is_per_kg) {
             // Flat cost
             if ($cost->min == 0 && $cost->max == 0) {
@@ -112,5 +115,38 @@ class Cost extends ComponentBase
 
     function onSelectCourier() {
         $this->page['packages'] = Courier::find(post('courier_id'))->packages;
+    }
+
+    /**
+     * AJAX handler when selecting insurance
+     *
+     * @param $packageId
+     * @param $subtotal 
+     *
+     * @return array
+     **/
+    protected function onSelectInsurance()
+    {
+        $data = post();
+        $insuranceFee = 'Not available';
+
+        $package = Package::find($data['package_id']);
+
+        if (! $data['is_insurance']) {
+            return ['#insuranceFee' => '-'];
+        }
+
+        if ($package->is_insurance) {
+            $this->page['is_insurance'] = $package->is_insurance;
+        
+            if ($package->is_fixed) {
+                $insuranceFee =  $package->amount; 
+            }
+            else {
+                $insuranceFee = $data['subtotal'] * $package->amount / 100;
+            }
+        }
+
+        return ['#insuranceFee' => $insuranceFee];
     }
 }

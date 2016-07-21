@@ -9,6 +9,14 @@ columns:
         valueFrom: name
     name:
         label: Name
+    is_insurance:
+        label: Insurance
+        type: switch
+    is_fixed:
+        label: Fixed amount
+        type: switch
+    amount:
+        label: Amount (Fixed / Percentage)
     description:
         label: Description
     etd:
