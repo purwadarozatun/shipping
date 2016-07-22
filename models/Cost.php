@@ -77,9 +77,6 @@ class Cost extends Model
                 $this->is_per_kg = 0;
                 break;
         }
-        unset($this->courier); 
-        unset($this->origin_state); 
-        unset($this->destination_state); 
         unset($this->cost_rules);
     }
         
