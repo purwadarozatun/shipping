@@ -16,7 +16,7 @@ class City extends Model
     /**
      * Softly implement the CityModel behavior.
      **/
-    /* public $implement = ['@Octommerce.Octommerce.Behaviors.CityModel']; */
+    public $implement = ['@Octommerce.Octommerce.Behaviors.CityModel']; 
 
     /**
      * @var array Guarded fields
