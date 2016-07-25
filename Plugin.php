@@ -32,11 +32,11 @@ class Plugin extends PluginBase
         /**
          * Extend RainLab\Location\Models\State
          */
-        // State::extend(function($model) {
-        //     $model->hasMany['cities'] = [
-        //         'Octommerce\Shipping\Models\City'
-        //     ];
-        // });
+        State::extend(function($model) {
+            $model->hasMany['cities'] = [
+                'Octommerce\Shipping\Models\City'
+            ];
+        });
     }
 
     /**
