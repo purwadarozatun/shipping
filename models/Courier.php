@@ -21,7 +21,7 @@ class Courier extends Model
     /**
      * @var array Fillable fields
      */
-    protected $fillable = [];
+    protected $fillable = ['name', 'description'];
 
     /**
      * @var array Relations
