@@ -70,7 +70,6 @@ class Seed extends Command
      */
     protected function saveCost($originCity)
     {
-
         $provinces = $this->getProvinces();
 
         $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->province_id]);
@@ -176,7 +175,11 @@ class Seed extends Command
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            $this->error("cURL Error #:" . $err);
+            $this->info('Retrying in 5 seconds');
+            sleep(5);
+
+            return $this->getProvinces();
         } 
         else {
             return json_decode($response)->rajaongkir->results;
@@ -211,7 +214,11 @@ class Seed extends Command
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            $this->error("cURL Error #:" . $err);
+            $this->info('Retrying in 5 seconds');
+            sleep(5);
+
+            return $this->getCities($provinceId);
         } 
         else {
             return json_decode($response)->rajaongkir->results;
@@ -248,7 +255,11 @@ class Seed extends Command
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;
+            $this->error("cURL Error #:" . $err);
+            $this->info('Retrying in 5 seconds');
+            sleep(5);
+
+            return $this->getCost($originCityId, $destinationCityId, $weight, $courier);
         } else {
             return json_decode($response)->rajaongkir->results;
         }
