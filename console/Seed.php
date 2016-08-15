@@ -81,8 +81,8 @@ class Seed extends Command
     {
         $cost = $this->getCost($originCity->city_id, $destinationCity->city_id);
 
-        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->postal_code]);
-        $destinationState = State::updateOrCreate(['name' => $destinationCity->province], ['code' => $destinationCity->postal_code]);
+        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->province_id]);
+        $destinationState = State::updateOrCreate(['name' => $destinationCity->province], ['code' => $destinationCity->province_id]);
 
         $originCityDb = City::firstOrCreate([
             'name'     => $originCity->city_name,
