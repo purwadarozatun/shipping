@@ -4,10 +4,20 @@
 
 tabs:
     fields:
-        city:
-            label: Origin Shipment
-            type: recordfinder
-            list: $/octommerce/shipping/models/city/columns.yaml
-            prompt: Click the %s button to find city
-            nameFrom: name
+        city_id:
+            label: City
+            hidden: true
+            tab: General
+
+        origin_state:
+            label: Origin state
+            type: dropdown
+            span: auto
+            tab: General
+
+        origin_city:
+            label: Origin city
+            type: dropdown
+            span: auto
+            dependsOn: origin_state
             tab: General
