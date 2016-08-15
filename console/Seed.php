@@ -98,7 +98,7 @@ class Seed extends Command
 
         foreach($cost[0]->costs as $cost) {
             if (! $cost)
-                continue 3;
+                continue;
 
             $package = Package::firstOrCreate([
                 'courier_id'  => $this->courier->id,
