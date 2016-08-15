@@ -45,16 +45,25 @@ class Seed extends Command
         Model::unguard();
 
         $provinces = $this->getProvinces();
+        $originCity = $this->getCity($this->option('origin-city-id'));
+
+        $this->info("Seeding " . $originCity->city_name . " city of " . $originCity->province . " state");
+        $this->line('');
 
         foreach ($provinces as $province) {
 
             $cities = $this->getCities($province->province_id);
 
-            foreach($cities as $city) {
-                $this->info(strtoupper('SEEDING ' . $city->city_name . " city of " . $province->province . " state"));
-                $this->line('');
+            // Start the progress bar
+            $this->info("Cities in " . $province->province . " state");
+            $progressBarTotal = count($cities);
+            $progressBar = new ProgressBar($this->output, $progressBarTotal);
+            $progressBar->setFormat('debug');
+            $progressBar->start();
 
-                $this->saveCost($city);
+            foreach($cities as $destinationCity) {
+                $this->saveCost($originCity, $destinationCity);
+                $progressBar->advance();
             }
 
             $this->line('');
@@ -68,11 +77,12 @@ class Seed extends Command
      *
      * @return void
      */
-    protected function saveCost($originCity)
+    protected function saveCost($originCity, $destinationCity)
     {
-        $provinces = $this->getProvinces();
+        $cost = $this->getCost($originCity->city_id, $destinationCity->city_id);
 
-        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->province_id]);
+        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->postal_code]);
+        $destinationState = State::updateOrCreate(['name' => $destinationCity->province], ['code' => $destinationCity->postal_code]);
 
         $originCityDb = City::firstOrCreate([
             'name'     => $originCity->city_name,
@@ -80,52 +90,31 @@ class Seed extends Command
             'state_id' => $originState->id
         ]);
 
-        foreach ($provinces as $province) {
-            $cities = $this->getCities($province->province_id);
+        $destinationCityDb = City::firstOrCreate([
+            'name'     => $destinationCity->city_name,
+            'code'     => $destinationCity->postal_code,
+            'state_id' => $destinationState->id
+        ]);
 
-            $destinationState = State::updateOrCreate(['name' => $province->province], ['code' => $province->province_id]);
+        foreach($cost[0]->costs as $cost) {
+            if (! $cost)
+                continue 3;
 
-            // Start the progress bar
-            $this->info("Cities in " . $province->province . " state");
-            $progressBarTotal = count($cities);
-            $progressBar = new ProgressBar($this->output, $progressBarTotal);
-            $progressBar->setFormat('debug');
-            $progressBar->start();
+            $package = Package::firstOrCreate([
+                'courier_id'  => $this->courier->id,
+                'name'        => $cost->service,
+                'description' => $cost->description,
+            ]);
 
-            foreach($cities as $city) {
-                $cost = $this->getCost($originCity->city_id, $city->city_id);
-
-                $destinationCityDb = City::firstOrCreate([
-                    'name'     => $city->city_name,
-                    'code'     => $city->postal_code,
-                    'state_id' => $destinationState->id
-                ]);
-
-                foreach($cost[0]->costs as $cost) {
-                    if (! $cost)
-                        continue 3;
-
-                    $package = Package::firstOrCreate([
-                        'courier_id'  => $this->courier->id,
-                        'name'        => $cost->service,
-                        'description' => $cost->description,
-                    ]);
-
-                    $costDb = Cost::updateOrCreate([
-                        'city_origin_id'      => $originCityDb->id,
-                        'city_destination_id' => $destinationCityDb->id,
-                        'package_id'          => $package->id,
-                        'is_per_kg'           => 1
-                    ],
-                    [
-                        'amount'              => $cost->cost[0]->value
-                    ]);
-                }
-
-                $progressBar->advance();
-            }
-
-            $this->line('');
+            $costDb = Cost::updateOrCreate([
+                'city_origin_id'      => $originCityDb->id,
+                'city_destination_id' => $destinationCityDb->id,
+                'package_id'          => $package->id,
+                'is_per_kg'           => 1
+            ],
+            [
+                'amount'              => $cost->cost[0]->value
+            ]);
         }
     }
 
@@ -144,7 +133,9 @@ class Seed extends Command
      */
     protected function getOptions()
     {
-        return [];
+        return [
+            ['origin-city-id', null, InputOption::VALUE_REQUIRED, 'Origin city id from rajaongkir API'] 
+        ];
     }
 
    /**
@@ -187,7 +178,46 @@ class Seed extends Command
     }
 
     /**
-     * Get cities by given province is_dir(path)
+     * Get city by given city_id
+     *
+     * @return object
+     */
+    protected function getCity($cityId)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL            => "http://api.rajaongkir.com/starter/city?id=". $cityId ."&province",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING       => "",
+            CURLOPT_MAXREDIRS      => 10,
+            CURLOPT_TIMEOUT        => 30,
+            CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST  => "GET",
+            CURLOPT_HTTPHEADER     => array(
+                "key: " . $this->getApiKey()
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            $this->error("cURL Error #:" . $err);
+            $this->info('Retrying in 5 seconds');
+            sleep(5);
+
+            return $this->getCity($cityId);
+        } 
+        else {
+            return json_decode($response)->rajaongkir->results;
+        }
+    }
+
+    /**
+     * Get cities by given province_id
      *
      * @return object
      */
