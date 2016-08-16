@@ -13,3 +13,6 @@
 1.0.5:
     - Add is_insurance, is_fixed and amount columns to packages table
     - add_is_insurance_is_fixed_and_amount_columns_to_packages_table.php
+1.0.6:
+    - Add is_enabled column to packages table
+    - add_is_enabled_column_to_packages_table.php

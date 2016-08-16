@@ -114,7 +114,11 @@ class Cost extends ComponentBase
     }
 
     function onSelectCourier() {
-        $this->page['packages'] = Courier::find(post('courier_id'))->packages;
+        $this->page['packages'] = Package::enabled()
+            ->whereHas('courier', function($query) {
+                $query->whereId(post('courier_id'));
+            })
+            ->get();
     }
 
     /**

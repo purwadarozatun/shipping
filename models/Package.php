@@ -43,4 +43,9 @@ class Package extends Model
     public $attachOne = [];
     public $attachMany = [];
 
+    public function scopeEnabled($query)
+    {
+        $query->whereIsEnabled(true); 
+    }
+
 }
