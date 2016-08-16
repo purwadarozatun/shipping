@@ -6,6 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Helper\ProgressBar;
 use RainLab\Location\Models\State;
+use RainLab\Location\Models\Country;
 use Octommerce\Shipping\Models\City;
 use Octommerce\Shipping\Models\Cost;
 use Octommerce\Shipping\Models\Package;
@@ -81,8 +82,9 @@ class Seed extends Command
     {
         $cost = $this->getCost($originCity->city_id, $destinationCity->city_id);
 
-        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->province_id]);
-        $destinationState = State::updateOrCreate(['name' => $destinationCity->province], ['code' => $destinationCity->province_id]);
+        $country = Country::remember(1440)->whereName('Indonesia')->first();
+        $originState = State::updateOrCreate(['name' => $originCity->province], ['code' => $originCity->province_id, 'country_id' => $country->id]);
+        $destinationState = State::updateOrCreate(['name' => $destinationCity->province], ['code' => $destinationCity->province_id, 'country_id' => $country->id]);
 
         $originCityDb = City::firstOrCreate([
             'name'     => $originCity->city_name,

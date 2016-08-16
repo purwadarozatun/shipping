@@ -3,6 +3,7 @@
 use Model;
 use Octommerce\Shipping\Models\City;
 use RainLab\Location\Models\State;
+use RainLab\Location\Models\Country;
 
 /**
  * Settings Model
@@ -35,7 +36,8 @@ class Settings extends Model
     {
         $cityFromApi = $this->getCity($cityId);
 
-        $state = State::updateOrCreate(['name' => $cityFromApi->province], ['code' => $cityFromApi->province_id]);
+        $country = Country::remember(1440)->whereName('Indonesia')->first();
+        $state = State::updateOrCreate(['name' => $cityFromApi->province], ['code' => $cityFromApi->province_id, 'country_id' => $country->id]);
 
         $city = City::firstOrCreate([
             'name'     => $cityFromApi->city_name,
